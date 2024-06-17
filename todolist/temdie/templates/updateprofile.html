@@ -8,23 +8,22 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h2>Register</h2>
-                <form method="POST" action="{% url 'signup' %}">
+                <h2>Update your profile</h2>
+                <form method="post" action="{% url 'update_profile' user.id%}">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="Name">Name</label>
-                        <input type="text" class="form-control" id="Name" placeholder="Enter name" name="name">
+                        <input type="text" class="form-control" id="Name" placeholder="Enter name" name="name" value="{{user.name}}">
                     </div>
                     <div class="form-group">
                         <label for="Email">Email</label>
-                        <input type="email" class="form-control" id="Email" placeholder="Enter email" name="email">
+                        <input type="email" class="form-control" id="Email" placeholder="Enter email" name="email" value="{{user.email}}">
                     </div>
                     <div class="form-group">
                         <label for="Password">Password</label>
-                        <input type="password" class="form-control" id="Password" placeholder="Enter password" password="password">
+                        <input type="text" class="form-control" id="Password" placeholder="Enter password" name="password" password="password" value="{{user.password}}">
                     </div>
-                    <button type="submit" class="btn btn-primary">Register</button>
-                    <p>Please <a href="{% url 'login' %}">click here</a> to go to the login page.</p>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>
 </body>

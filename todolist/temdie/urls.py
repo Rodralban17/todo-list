@@ -8,5 +8,6 @@ urlpatterns=[
     path('addtask/<int:user_id>/', views.addtask, name='add_task'),
     path('deletetask/<int:task_id>/', views.deletetask, name='delete_task'),
     path('addtag/', views.addtag, name='add_tag'),
-
+    path('updateprofile/<int:user_id>/', views.updateprofile, name='update_profile'),
+    path('updateprofile/', views.updateprofile, name='update_profile'),
 ] 

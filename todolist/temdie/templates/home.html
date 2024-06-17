@@ -7,8 +7,11 @@
 <body>
     <div class="container">
         <h1>Welcome {{user.name}} </h1>
+
+        <h3>Task</h3>
         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addTask">Add Task</button>
         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addTag">Add Tag</button>
+        <a href="{% url 'update_profile' user.id %}" class="btn btn-primary mb-3">Update profile</a>
     <br></br>
         <table class="table">
             <thead>
@@ -45,13 +48,27 @@
                         </select>
                     </td>
                     <td>
-                        <form action="{% url 'delete_task' task.id %}" method="POST" style="display: inline;">
-                            {% csrf_token %}
-                            <input type="hidden" name="tag_id" value="{{ tag.id }}">
-                            <button type="submit" class="delete-button" style="background-color: red;">Delete</button>
-                        </form>
+                        
+                        <a href="{% url 'delete_task' task.id %}" class="btn btn-danger btn-sm" >Delete</a>
                     </td>
                 </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Tag</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Tasks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag in tags %}
+                <td>{{ tag.name }}</td>
+
+                <td>{{ tag.name }}</td>
                 {% endfor %}
             </tbody>
         </table>

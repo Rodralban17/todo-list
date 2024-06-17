@@ -28,18 +28,23 @@ def login(request):
         email = request.POST['email']
         password = request.POST['password']
 
-        user = User.objects.get(email=email, password=password)
+        user = User.objects.get(email=email)
         tags = TemdieTag.objects.filter(task__user=user)  
         tasks = user.temdietask_set.all()  
 
-        context = {
+        if user.password == password:
+            tags = TemdieTag.objects.filter(task__user=user)  
+            tasks = user.temdietask_set.all() 
+            context = {
             'user': user,
             'tags': tags,
             'tasks': tasks
-        }
+            }
 
-        return render(request, 'home.html', context)
-        #messages.info(request, 'Invalid email or password')
+            return render(request, 'home.html', context)
+        
+        else:
+             return render(request, 'result.html', {'result': "Invalid email or password"})
             
     else:
         return render(request, 'login.html')
@@ -79,9 +84,22 @@ def addtag(request):
 
 def deletetask(request, task_id):
     task = TemdieTask.objects.get(id=task_id)
-    #task.temdietag_set.all().delete()
     task.delete()
 
     return render(request, 'result.html', {'result': "Task deleted !!"})
 
+def updateprofile(request, user_id):
 
+    if request.method == 'POST':
+        user = User.objects.get(id=user_id)
+
+        user.name = request.POST['name']
+        user.email = request.POST['email']
+        user.password = request.POST['password']
+
+        user.save()
+        return render(request, 'result.html', {'result': "Fields updated !!"})
+
+    else:
+        user = User.objects.get(id=user_id)
+        return render(request, 'updateprofile.html', {'user': user})
