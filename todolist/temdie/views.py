@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import *
 from django.contrib import messages
 from django.http import JsonResponse
@@ -48,5 +48,19 @@ def updatestatus(request, task_id):
     task = TemdieTask.objects.get(id=task_id)
     task.completed = True
     task.save()
-    return render(request, 'result.html')
+    return render(request, 'result.html', {'result': "Task status updated to complete"})
+
+def addtask(request, user_id):
+        title = request.POST['title']
+        desc = request.POST['description']
+        due_date = request.POST['due_date']
+        user = get_object_or_404(User, id=user_id)
+
+        if TemdieTask.objects.filter(title=title).exists():
+                return render(request, 'result.html', {'result': "This title already exist"})
+        else:
+                task =  TemdieTask.objects.create(title=title, description=desc, due_date=due_date, user=user)
+                task.save()
+                return render(request, 'result.html', {'result': "Task added!!"})        
+
  
