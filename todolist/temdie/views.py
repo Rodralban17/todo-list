@@ -61,7 +61,7 @@ def addtask(request, user_id):
         else:
                 task =  TemdieTask.objects.create(title=title, description=desc, due_date=due_date, user=user)
                 task.save()
-                return render(request, 'result.html', {'result': "Task added!!"})        
+                return render(request, 'result.html', {'result': "Task added !!"})        
 
 def addtag(request):
     name = request.POST['name']
@@ -75,5 +75,13 @@ def addtag(request):
         task = TemdieTask.objects.get(id=task_id)
         tag.task.add(task)
 
-    return render(request, 'result.html', {'result': "Tag added!!"})
+    return render(request, 'result.html', {'result': "Tag added !!"})
+
+def deletetask(request, task_id):
+    task = TemdieTask.objects.get(id=task_id)
+    #task.temdietag_set.all().delete()
+    task.delete()
+
+    return render(request, 'result.html', {'result': "Task deleted !!"})
+
 

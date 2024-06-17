@@ -18,6 +18,7 @@
                     <th>Due Date</th>
                     <th>Completed</th>
                     <th>Tags</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,6 +43,13 @@
                         <option {% if tag.selected %}selected{% endif %}>{{ tag.name }}</option>
                         {% endfor %}
                         </select>
+                    </td>
+                    <td>
+                        <form action="{% url 'delete_task' task.id %}" method="POST" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="tag_id" value="{{ tag.id }}">
+                            <button type="submit" class="delete-button" style="background-color: red;">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 {% endfor %}
