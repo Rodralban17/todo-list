@@ -24,5 +24,6 @@ class TemdieTask(models.Model):
 class TemdieTag(models.Model):
     name = models.CharField(max_length=50)
     task = models.ManyToManyField(TemdieTask)
+    
     def __str__(self):
         return self.name

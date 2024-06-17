@@ -63,4 +63,17 @@ def addtask(request, user_id):
                 task.save()
                 return render(request, 'result.html', {'result': "Task added!!"})        
 
- 
+def addtag(request):
+    name = request.POST['name']
+    task_ids = request.POST.getlist('tasks')
+
+    task_ids = [int(task_id) for task_id in task_ids if task_id.isdigit()]
+
+    tag = TemdieTag.objects.create(name=name)
+    
+    for task_id in task_ids:
+        task = TemdieTask.objects.get(id=task_id)
+        tag.task.add(task)
+
+    return render(request, 'result.html', {'result': "Tag added!!"})
+
